@@ -1,9 +1,10 @@
-📚 README - Problema da Dieta de Stigler
-🎯 Sobre o Projeto
+# 📚 README - Problema da Dieta de Stigler
+
+# 🎯 Sobre o Projeto
 Implementação do famoso "Problema da Dieta de Stigler" (1939) usando Programação Linear com Google OR-Tools. Este foi o primeiro problema de otimização linear resolvido computacionalmente.
 
-❓ Perguntas Frequentes e Respostas
-1. "Por que o custo da nossa solução (R$ 261,51/ano) é diferente do Stigler original (US$ 39,93/ano)?"
+# ❓ Perguntas Frequentes e Respostas
+# 1. "Por que o custo da nossa solução (R$ 261,51/ano) é diferente do Stigler original (US$ 39,93/ano)?"
 Resposta: Há várias razões para essa diferença:
 
 Problema de Escala nos Dados: Os valores nutricionais nos CSVs originais parecem estar em uma escala incorreta. Por exemplo, "44.7 calorias para 10lb de farinha" é unrealisticamente baixo.
@@ -16,7 +17,7 @@ Metodologia Diferente: Stigler usou métodos manuais, nós usamos otimização c
 
 Correção Sugerida: Multiplicar todos os valores nutricionais por ~100 nos cálculos.
 
-2. "Por que o algoritmo escolhe apenas 4 alimentos? Isso é saudável?"
+# 2. "Por que o algoritmo escolhe apenas 4 alimentos? Isso é saudável?"
 Resposta: Não, não é saudável! Isso acontece porque:
 
 Otimização Pura: O algoritmo encontra a solução MATEMATICAMENTE ótima, não nutricionalmente balanceada
@@ -27,7 +28,7 @@ Falta de Restrições de Variedade: Não há restrições que forcem diversidade
 
 Para uso real: Deveríamos adicionar restrições de variedade mínima e limites máximos por alimento.
 
-3. "Qual algoritmo de otimização está sendo usado e por quê?"
+# 3. "Qual algoritmo de otimização está sendo usado e por quê?"
 Resposta: Usamos o Método Simplex através do solver GLOP do Google OR-Tools porque:
 
 GLOP (Google Linear Optimization Package) é especializado em problemas de Programação Linear contínua
@@ -38,7 +39,7 @@ Convergência Garantida: Para problemas convexos de PL, encontra sempre o ótimo
 
 Open Source: Diferente de solvers comerciais como CPLEX ou Gurobi
 
-4. "Por que usar variáveis contínuas (NumVar) em vez de inteiras (IntVar)?"
+# 4. "Por que usar variáveis contínuas (NumVar) em vez de inteiras (IntVar)?"
 Resposta: Escolhemos variáveis contínuas porque:
 
 Flexibilidade: Permite comprar frações de gramas (mais realista para alimentos)
@@ -49,7 +50,7 @@ Precisão: Evita erros de arredondamento em quantidades pequenas
 
 Para implementação prática: Em um sistema real, converteríamos para IntVar após a otimização contínua.
 
-5. "O modelo considera sazonalidade e variação de preços?"
+# 5. "O modelo considera sazonalidade e variação de preços?"
 Resposta: Não, o modelo atual tem limitações:
 
 Preços Fixos: Usa apenas os preços de 1939 fornecidos nos dados originais
@@ -60,7 +61,7 @@ Disponibilidade Constante: Assume que todos alimentos estão sempre disponíveis
 
 Extensão possível: Poderíamos criar múltiplos cenários com diferentes conjuntos de preços.
 
-6. "Como lidar com restrições adicionais como alergias ou preferências?"
+# 6. "Como lidar com restrições adicionais como alergias ou preferências?"
     Resposta: O modelo pode ser facilmente extendido:
 
     # Excluir amendoim para alérgicos
@@ -71,7 +72,8 @@ Extensão possível: Poderíamos criar múltiplos cenários com diferentes conju
 
     # Forçar variedade mínima
     solver.Add(sum([var > 0 for var in variaveis.values()]) >= 8)
-7. "A solução é viável para implementação real?"
+
+# 7. "A solução é viável para implementação real?"
 Resposta: Como está, NÃO, mas serve como base para:
 
 Protótipo Educacional: Excelente para aprender otimização linear
@@ -94,7 +96,8 @@ Restrições de palatabilidade e variedade
 
 Considerações culturais e religiosas
 
-8. "Como escalar para uma família em vez de indivíduo?"
+# 8. "Como escalar para uma família em vez de indivíduo?"
+
     Resposta: Simplesmente multiplicando os requisitos:
     # Para família de 4 pessoas
 
@@ -102,7 +105,8 @@ Considerações culturais e religiosas
     for nutriente in nutrientes:
         minimo_original = nutriente['minimo']
         nutriente['minimo'] = minimo_original * tamanho_familia
-. "E se não houver solução viável?"
+
+# 9. "E se não houver solução viável?"
 Resposta: O solver retornará status = INFEASIBLE. Nesse caso:
 
 Relaxar Restrições: Reduzir alguns requisitos nutricionais
@@ -111,7 +115,7 @@ Adicionar Alimentos: Incluir mais opções na base de dados
 
 Permitir Déficits: Aceitar que alguns nutrientes fiquem abaixo do mínimo
 
-10. "Quais as principais limitações deste modelo?"
+# 10. "Quais as principais limitações deste modelo?"
 Resposta: Limitações importantes:
 
 Dados Históricos: Preços e valores nutricionais de 1939
