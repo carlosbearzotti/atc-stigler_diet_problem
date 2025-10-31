@@ -61,17 +61,16 @@ Disponibilidade Constante: Assume que todos alimentos estão sempre disponíveis
 Extensão possível: Poderíamos criar múltiplos cenários com diferentes conjuntos de preços.
 
 6. "Como lidar com restrições adicionais como alergias ou preferências?"
-Resposta: O modelo pode ser facilmente extendido:
+    Resposta: O modelo pode ser facilmente extendido:
 
-python
-# Excluir amendoim para alérgicos
-solver.Add(variaveis['Peanut Butter'] == 0)
+    # Excluir amendoim para alérgicos
+    solver.Add(variaveis['Peanut Butter'] == 0)
 
-# Limitar quantidade máxima de um alimento
-solver.Add(variaveis['Liver (Beef)'] <= 50)  # Máximo 50g
+    # Limitar quantidade máxima de um alimento
+    solver.Add(variaveis['Liver (Beef)'] <= 50)  # Máximo 50g
 
-# Forçar variedade mínima
-solver.Add(sum([var > 0 for var in variaveis.values()]) >= 8)
+    # Forçar variedade mínima
+    solver.Add(sum([var > 0 for var in variaveis.values()]) >= 8)
 7. "A solução é viável para implementação real?"
 Resposta: Como está, NÃO, mas serve como base para:
 
@@ -96,15 +95,14 @@ Restrições de palatabilidade e variedade
 Considerações culturais e religiosas
 
 8. "Como escalar para uma família em vez de indivíduo?"
-Resposta: Simplesmente multiplicando os requisitos:
+    Resposta: Simplesmente multiplicando os requisitos:
+    # Para família de 4 pessoas
 
-python
-# Para família de 4 pessoas
-tamanho_familia = 4
-for nutriente in nutrientes:
-    minimo_original = nutriente['minimo']
-    nutriente['minimo'] = minimo_original * tamanho_familia
-9. "E se não houver solução viável?"
+    tamanho_familia = 4
+    for nutriente in nutrientes:
+        minimo_original = nutriente['minimo']
+        nutriente['minimo'] = minimo_original * tamanho_familia
+. "E se não houver solução viável?"
 Resposta: O solver retornará status = INFEASIBLE. Nesse caso:
 
 Relaxar Restrições: Reduzir alguns requisitos nutricionais
@@ -127,17 +125,16 @@ Preços Fixos: Não captura flutuações de mercado
 Otimização Extrema: Pode sugerir dietas monótonas e não-saudáveis
 
 🚀 Como Executar
-bash
-# Instalar dependências
-pip install pandas ortools
+    # Instalar dependências
+    pip install pandas ortools
 
-# Executar o programa
-python dieta_otimizada.py
+    # Executar o programa
+    python dieta_otimizada.py
+
 📊 Estrutura dos Arquivos
-text
-stigler_diet/
-├── dieta_otimizada.py          # Código principal
-├── nutrientes.csv              # Requisitos nutricionais
-├── data.csv                    # Dados dos alimentos
-├── README.md                   # Este arquivo
-└── requirements.txt            # Dependências
+    stigler_diet/
+    ├── dieta_otimizada.py          # Código principal
+    ├── nutrientes.csv              # Requisitos nutricionais
+    ├── data.csv                    # Dados dos alimentos
+    ├── README.md                   # Este arquivo
+    └── requirements.txt            # Dependências
